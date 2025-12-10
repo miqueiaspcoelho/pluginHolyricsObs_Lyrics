@@ -40,3 +40,9 @@ holyrics-monitor/
 ```bash
 npm install
 ```
+
+## Como Rodar:
+Para rodar o projeto rode dentro da pasta do projeto:
+```bash
+npm run serverObs
+```
