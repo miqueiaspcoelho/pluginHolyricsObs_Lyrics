@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualizador de Letras (Holyrics WS)</title>
+    
+    <style>
+    /* -----------------------------------------------------------------
+       1. Estilo Básico do Corpo (Transparência CRÍTICA para OBS)
+       ----------------------------------------------------------------- */
+    body {
+        /* CRÍTICO: Define o fundo como transparente para o OBS */
+        background-color: transparent !important;
+        margin: 1vw 0;
+        padding-right: 100vw;
+        overflow: hidden; 
+        width: 100vw;
+        height: 100vh;
+        /* Usa flexbox para centralizar, mas agora no BODY */
+        display: flex; 
+        justify-content: center;
+        align-items: flex-end;
+        text-align: center;
+        /* font-family: 'Arial Black', Arial, sans-serif; */
+        font-family: 'Calibri', 'Trebuchet MS', sans-serif;
+    }
+
+    /* -----------------------------------------------------------------
+       2. Estilo do Contêiner da Letra (Controla a área de texto)
+       ----------------------------------------------------------------- */
+    #letra-container {
+        width: 70%;
+        margin-left: 0vw; 
+        margin-right: 10vh; 
+        margin-bottom: 5vh;
+        text-align: left; 
+        padding: 0 2vw;
+        
+    }
+
+    /* -----------------------------------------------------------------
+       3. Estilo do Texto (A Letra em Si)
+       ----------------------------------------------------------------- */
+    #letra-display {
+        /* Fontes e Efeitos */
+        font-size: 2vw; 
+        line-height: 1.2;
+        font-weight: 900; 
+        color: white; 
+        
+        /* Contorno Duplo (Altamente recomendado para legibilidade) */
+        text-shadow: 
+            -2px -2px 0 #000, 
+             2px -2px 0 #000,
+            -2px  2px 0 #000,
+             2px  2px 0 #000,
+             0px 0px 8px rgba(0, 0, 0, 0.7); 
+        
+        /* Transição e Estado Inicial */
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0; /* Começa invisível para evitar texto "Conectando..." */
+        white-space: pre-wrap; /* Mantém as quebras de linha '\n' */
+        display: block; /* Garante que o texto ocupe a linha inteira */
+    }
+
+    /* -----------------------------------------------------------------
+       4. Classe de Controle (Usada para Fade-In/Out)
+       ----------------------------------------------------------------- */
+    .show-text {
+        opacity: 1 !important; /* Usada para mostrar o texto (Fade-In) */
+    }
+
+    </style>
+</head>
+<body>
+
+    <div id="letra-container">
+        <pre id="letra-display">Conectando ao servidor...</pre> 
+    </div>
+
+    <script>
+        // --- Configurações de Conexão ---
+        const IP_DO_SERVIDOR = '__IP_DINAMICO__'; // INJETADO pelo mini_http_server.js
+        const PORTA = 3000;
+        
+        const ws = new WebSocket(`ws://${IP_DO_SERVIDOR}:${PORTA}`);
+        const letraDisplay = document.getElementById('letra-display');
+        
+        // Função para mostrar ou ocultar o texto com transição
+        function setDisplayText(text) {
+            if (text && text.trim().length > 0) {
+                // Conteúdo válido: Exibir
+                letraDisplay.innerText = text;
+                letraDisplay.classList.add('show-text');
+                
+            } else {
+                // Conteúdo vazio (Fim da Letra): Ocultar
+                letraDisplay.classList.remove('show-text');
+                
+                // Limpa o texto após o fade-out para garantir que não haja nada
+                setTimeout(() => {
+                    letraDisplay.innerText = "";
+                }, 300); // 300ms = tempo da transição no CSS
+            }
+        }
+        
+        // ------------------------------------------------
+        // Gerenciamento de Conexão
+        // ------------------------------------------------
+        
+        ws.onopen = () => {
+            console.log('Conectado ao Servidor!');
+            // Exibe o status inicial (com Fade-In)
+            setDisplayText("Conectado. Aguardando a primeira letra...");
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                
+                if (data.tipo === 'letra') {
+                    // Chama a função que gerencia o Fade-In/Out
+                    setDisplayText(data.conteudo);
+                }
+            } catch (e) {
+                console.error("Erro ao analisar a mensagem JSON:", e);
+                setDisplayText("ERRO: Dados inválidos.");
+            }
+        };
+
+        ws.onclose = () => {
+            console.log('Desconectado do Servidor!');
+            // Exibe a mensagem de erro (com Fade-In)
+            setDisplayText("Conexão perdida. Verifique o servidor.");
+        };
+
+        ws.onerror = (error) => {
+            console.error('Erro no WebSocket:', error);
+            // setDisplayText("Erro de conexão. Verifique o endereço e a porta."); // A mensagem de onclose costuma ser mais informativa
+        };
+    </script>
+</body>
+</html>

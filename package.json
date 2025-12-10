@@ -1,0 +1,21 @@
+{
+  "name": "pluginholyricsobslyrics",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-ws": "node server_ws.js",
+    "start-http-server": "node mini_http_server.js",
+    "serverObs": "concurrently \"npm run start-ws\" \"npm run start-http-server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
