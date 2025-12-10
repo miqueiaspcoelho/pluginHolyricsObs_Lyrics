@@ -34,6 +34,9 @@ holyrics-monitor/
 ├── mini_http_server.js # Servidor HTTP (entrega o HTML para o OBS)
 ├── serverFunctions.js  # Módulo de Funções Reutilizáveis (IP dinâmico, sanitização)
 └── client_ws.html      # Cliente HTML/CSS (A ser usado como Fonte de Navegador no OBS)
+```
 
-# 2. Instala todas as dependências listadas no package.json
+## 🔌Instala todas as dependências listadas no package.json
+```bash
 npm install
+```
