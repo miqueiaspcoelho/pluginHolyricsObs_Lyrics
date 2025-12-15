@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Holyrics OBS Plugin - Status</title>
+    <style>
+        /* -----------------------------------------------------------------
+           ESTILO BÁSICO (Adaptado do Dark Mode do seu template)
+           ----------------------------------------------------------------- */
+        body { 
+            background-color: #1e1e1e; 
+            color: #e0e0e0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding: 20px; 
+            user-select: none;
+            overflow: hidden; /* Garante que a janela se ajuste ao conteúdo */
+            overflow-y: auto;
+        }
+        h2 {
+            border-bottom: 1px solid #333; 
+            padding-bottom: 10px; 
+            margin-top: 0;
+            color: #2196f3; /* Cor primária para o título */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h3 {
+             color: #aaa;
+             margin-top: 25px;
+             margin-bottom: 5px;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #333;
+            margin: 20px 0;
+        }
+
+        /* -----------------------------------------------------------------
+           STATUS E BADGES
+           ----------------------------------------------------------------- */
+        .status-badge {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .active {
+            background-color: #4caf501a; /* Verde suave */
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+        .inactive {
+            background-color: #f443361a; /* Vermelho suave */
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        /* -----------------------------------------------------------------
+           INFORMAÇÕES DE CONEXÃO
+           ----------------------------------------------------------------- */
+        .info-grid {
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px 20px; 
+            margin-top: 15px;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 2px;
+        }
+        .info-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* -----------------------------------------------------------------
+           URL OBS
+           ----------------------------------------------------------------- */
+        .url-box {
+            background: #2d2d2d; 
+            border: 1px solid #444; 
+            color: #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-wrap: break-word;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .warning {
+            color: #ff9800; /* Laranja de aviso */
+            font-weight: bold;
+        }
+        
+        /* -----------------------------------------------------------------
+           CONTROLES (Opcional, se você adicionar botões de Ação)
+           ----------------------------------------------------------------- */
+        .controls { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: 20px;
+        }
+        .btn-restart { 
+            background: #2196f3; 
+            color: white; 
+            width: 100%; 
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-restart:hover {
+            background: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Status do Plugin
+        <span id="status-badge" class="status-badge inactive">INATIVO</span>
+    </h2>
+    <h2>Status do Servidor Holyrics
+        <span id="status-badge-holyrics" class="status-badge inactive">INATIVO</span>
+    </h2>
+
+    <h3>DETALHES DA REDE</h3>
+    <div class="info-grid">
+        <div class="info-item">
+            <span class="info-label">IP do Servidor (Este PC)</span>
+            <span id="ip-address" class="info-value">192.168.x.x</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Porta HTTP (OBS Cliente)</span>
+            <span id="http-port" class="info-value">8080</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Porta WebSocket (Holyrics)</span>
+            <span id="ws-port" class="info-value">3000</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">Status Holyrics API</span>
+            <span id="holyrics-status" class="info-value active">OK (Porta 80)</span>
+        </div>
+    </div>
+    
+    <hr>
+
+    <h3>URL para OBS Studio</h3>
+    <p class="info-label">Copie e cole este endereço como "Browser Source" no OBS:</p>
+    
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <div class="url-box" style="flex-grow: 1;">
+            <span id="obs-url-display">Carregando endereço...</span>
+        </div>
+        
+        <button id="copy-btn" class="btn-copy">
+            📋 Copiar
+        </button>
+    </div>
+    
+    <script src="renderer.js"></script> 
+</body>
+</html>

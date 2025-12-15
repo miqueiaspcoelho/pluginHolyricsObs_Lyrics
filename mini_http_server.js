@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { limparTextoEExtrair,transmitirLetra, getLocalIpAddress} = require('./server_functions');
+const { getLocalIpAddress} = require('./server_functions');
  
 
 // --- Configurações ---
@@ -40,14 +40,18 @@ const server = http.createServer((req, res) => {
         res.end("Página não encontrada.");
     }
 });
+function startHttpServer(){
+    server.listen(PORTA_HTTP, HOST_PARA_LISTEN, () => {
+        console.log("------------------------------------------------------------------");
+        console.log(`✅ Servidor HTTP Rodando na porta ${PORTA_HTTP}`);
+        console.log(`💻 Seu IP de Rede Local (PC 1): ${localIp}`);
+        console.log(`📡 Cliente WS será conectado em: ws://${localIp}:${PORTA_WS}`);
+        console.log("");
+        console.log("🔗 URL para o OBS (PC 2):");
+        console.log(`http://${localIp}:${PORTA_HTTP}/${NOME_DO_CLIENTE}`);
+        console.log("------------------------------------------------------------------");
+    });
+    return {localIp, PORTA_HTTP, NOME_DO_CLIENTE};
+}
 
-server.listen(PORTA_HTTP, HOST_PARA_LISTEN, () => {
-    console.log("------------------------------------------------------------------");
-    console.log(`✅ Servidor HTTP Rodando na porta ${PORTA_HTTP}`);
-    console.log(`💻 Seu IP de Rede Local (PC 1): ${localIp}`);
-    console.log(`📡 Cliente WS será conectado em: ws://${localIp}:${PORTA_WS}`);
-    console.log("");
-    console.log("🔗 URL para o OBS (PC 2):");
-    console.log(`http://${localIp}:${PORTA_HTTP}/${NOME_DO_CLIENTE}`);
-    console.log("------------------------------------------------------------------");
-});
+module.exports = startHttpServer;

@@ -1,21 +1,64 @@
 {
   "name": "pluginholyricsobslyrics",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Plugin para exibir letras do Holyrics no OBS via WebSocket.",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start-ws": "node server_ws.js",
-    "start-http-server": "node mini_http_server.js",
-    "serverObs": "concurrently \"npm run start-ws\" \"npm run start-http-server\""
+    "start": "electron .",
+    "dist": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "electron",
+    "holyrics",
+    "obs",
+    "lyrics"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "node-fetch": "^2.7.0",
     "ws": "^8.18.3"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.seuprojeto.holyricsobs",
+    "productName": "Holyrics OBS Plugin",
+    "files": [
+      "**/*",
+      "!node_modules/concurrently/**/*"
+    ],
+    "extraFiles": [
+      "main.js",
+      "index.html",
+      "renderer.js",
+      "preload.js",
+      "server_ws.js",
+      "mini_http_server.js",
+      "server_functions.js",
+      "client_ws.html"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    },
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Holyrics OBS Plugin"
+    }
   }
 }
