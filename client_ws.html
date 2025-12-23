@@ -10,15 +10,15 @@
     body {
         /* CRÍTICO: Define o fundo como transparente para o OBS */
         background-color: transparent !important;
-        margin: 1vw 0;
-        padding-right: 100vw;
+        margin: 0;
+        padding: 0;
         overflow: hidden; 
         width: 100vw;
         height: 100vh;
         /* Usa flexbox para centralizar, mas agora no BODY */
         display: flex; 
         justify-content: center;
-        align-items: flex-end;
+        align-items: center;
         text-align: center;
         /* font-family: 'Arial Black', Arial, sans-serif; */
         font-family: 'Calibri', 'Trebuchet MS', sans-serif;
@@ -28,13 +28,14 @@
        2. Estilo do Contêiner da Letra (Controla a área de texto)
        ----------------------------------------------------------------- */
     #letra-container {
-        width: 70%;
-        margin-left: 0vw; 
-        margin-right: 10vh; 
-        margin-bottom: 5vh;
-        text-align: left; 
-        padding: 0 2vw;
-        
+        /* background-color: rgba(0, 0, 0, 0.5); */
+        width: 90%;
+        height: 300px;
+        margin: auto 0;
+        text-align: center;
+        display: flex;            /* ativa Flexbox */
+        flex-direction: column;   /* organiza o conteúdo em coluna */
+        justify-content: flex-start; /* empurra o conteúdo para o fundo */
     }
 
     /* -----------------------------------------------------------------
@@ -42,10 +43,12 @@
        ----------------------------------------------------------------- */
     #letra-display {
         /* Fontes e Efeitos */
+        background-color: rgba(0, 0, 0, 0.5);
         font-size: 2vw; 
         line-height: 1.2;
         font-weight: 900; 
         color: white; 
+        text-align: justify;
         
         /* Contorno Duplo (Altamente recomendado para legibilidade) */
         text-shadow: 

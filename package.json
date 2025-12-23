@@ -1,21 +1,37 @@
 {
   "name": "pluginholyricsobslyrics",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
+   "description": "Plugin para Holyrics e Obs - Trasmissão de Letras",
+  "author": "Miquéias Coelho",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start-ws": "node server_ws.js",
-    "start-http-server": "node mini_http_server.js",
-    "serverObs": "concurrently \"npm run start-ws\" \"npm run start-http-server\""
+    "electron": "electron .",
+    "start": "electron .",
+    "dist": "electron-builder"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "build": {
+    "appId": "com.miqueiaspcoelho.pluginholyricsobslyrics",
+    "productName": "PluginHoLyricsOBS",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/music_note_icon-icons.com_498704.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "HolyricsObsPlugin"
+    }
+  },
   "dependencies": {
     "ws": "^8.18.3"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "electron": "^39.2.7",
+    "electron-builder": "^24.6.0"
   }
 }
