@@ -1,6 +1,6 @@
 {
   "name": "pluginholyricsobslyrics",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "main.js",
   "description": "Plugin para Holyrics e Obs - Trasmissão de Letras",
   "author": "Miquéias Coelho",
@@ -12,20 +12,41 @@
   "build": {
     "appId": "com.miqueiaspcoelho.pluginholyricsobslyrics",
     "productName": "PluginHoLyricsOBS",
+    "asar": true,
+    "compression": "maximum",
+    "electronLanguages": [
+      "pt-BR",
+      "en-US"
+    ],
     "directories": {
       "output": "dist"
     },
     "win": {
       "target": "nsis",
-      "icon": "assets/music_note_icon-icons.com_498704.png"
+      "icon": "assets/music_note_icon-icons.com_498705.ico",
+      "requestedExecutionLevel": "requireAdministrator"
     },
     "nsis": {
+      "guid": "511168df-c92e-4440-b2ce-c3cd7172125b",
       "oneClick": false,
       "perMachine": true,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "shortcutName": "HolyricsObsPlugin"
-    }
+      "shortcutName": "HolyricsObsPlugin",
+      "deleteAppDataOnUninstall": true,
+      "installerIcon": "assets/music_note_icon-icons.com_498705.ico"
+    },
+    "files": [
+      "main.js",
+      "helper.js",
+      "server_ws.js",
+      "mini_http_server.js",
+      "client_ws.html",
+      "server_functions.js",
+      "assets/**/*",
+      "node_modules/ws/**/*",
+      "package.json"
+    ]
   },
   "dependencies": {
     "ws": "^8.18.3"

@@ -44,7 +44,7 @@ function updateTrayTooltip() {
 
 // Inicializa o tray
 function createTray() {
-    const iconPath = path.join(__dirname, 'assets/music_note_icon-icons.com_49870.ico');
+    const iconPath = path.join(__dirname, 'assets/music_note_icon-icons.com_498705.ico');
     tray = new Tray(iconPath);
 
     const contextMenu = Menu.buildFromTemplate([
