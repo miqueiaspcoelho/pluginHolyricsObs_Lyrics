@@ -37,8 +37,6 @@ function startHttpServer() {
     });
 
     server.listen(PORTA_HTTP, HOST_PARA_LISTEN, () => {
-        console.log(`✅ HTTP rodando em http://${localIp}:${PORTA_HTTP}/${NOME_DO_CLIENTE}`);
-        console.log(`📡 WS em ws://${localIp}:${PORTA_WS}`);
     });
 
     return {

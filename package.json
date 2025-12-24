@@ -2,7 +2,7 @@
   "name": "pluginholyricsobslyrics",
   "version": "1.0.0",
   "main": "main.js",
-   "description": "Plugin para Holyrics e Obs - Trasmissão de Letras",
+  "description": "Plugin para Holyrics e Obs - Trasmissão de Letras",
   "author": "Miquéias Coelho",
   "scripts": {
     "electron": "electron .",

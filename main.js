@@ -1,5 +1,17 @@
 const { app, Tray, Menu, clipboard  } = require('electron');
+const {logError} = require('./helper');
 const path = require('path');
+
+
+//--- Escutando erros e escrevendo em um arquivo de log ---
+//erro sincrono 
+process.on('uncaughtException', (err) => {
+    logError(err, 'uncaughtException');
+});
+//erro assincrono
+process.on('unhandledRejection', (reason) => {
+    logError(reason, 'unhandledRejection');
+});
 
 // ---- Servidores ----
 const startWsServer = require('./server_ws');
@@ -45,7 +57,6 @@ function createTray() {
      tray.on('click', () => {
         const obsURL = `http://${serverStatus.localIp}:${serverStatus.httpPort}/${serverStatus.clientPath}`;
         clipboard.writeText(obsURL);
-        // console.log(`[COPY] URL do OBS copiada: ${obsURL}`);
         tray.displayBalloon({
             title: 'URL Copiada',
             content: obsURL
@@ -70,9 +81,8 @@ app.whenReady().then(() => {
         serverStatus.clientPath = httpInfo.NOME_DO_CLIENTE;
 
         serverStatus.isRunning = true;
-        console.log('✅ Servidores iniciados, tray pronto!');
     } catch (err) {
-        console.error('❌ Falha ao iniciar servidores:', err);
+        logError(err, 'Falha ao iniciar servidores');
     }
 
     // 3️⃣ Cria o tray

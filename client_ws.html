@@ -111,7 +111,6 @@
         // ------------------------------------------------
         
         ws.onopen = () => {
-            console.log('Conectado ao Servidor!');
             // Exibe o status inicial (com Fade-In)
             setDisplayText("Conectado. Aguardando a primeira letra...");
         };
@@ -131,7 +130,6 @@
         };
 
         ws.onclose = () => {
-            console.log('Desconectado do Servidor!');
             // Exibe a mensagem de erro (com Fade-In)
             setDisplayText("Conexão perdida. Verifique o servidor.");
         };

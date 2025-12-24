@@ -59,11 +59,7 @@ function startWsServer(onHolyricsStatusChange) {
     }
 
     // ---------------- EVENTOS ----------------
-
     wss.on('listening', () => {
-        console.log(`[WS] Servidor rodando na porta ${PORTA_SERVER_NODE}`);
-        console.log(`[POLLING] Holyrics: ${HOLYRCS_API_URL}`);
-
         pollingInterval = setInterval(
             fetchAndTransmit,
             POLLING_INTERVAL_MS
@@ -71,8 +67,6 @@ function startWsServer(onHolyricsStatusChange) {
     });
 
     wss.on('connection', ws => {
-        console.log('[WS] Cliente conectado');
-
         if (ultimaLetraTransmitida !== 'inicial') {
             ws.send(JSON.stringify({
                 tipo: 'letra',
